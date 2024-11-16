@@ -1,8 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Gender;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Role;
 import lombok.AllArgsConstructor;
@@ -22,7 +20,8 @@ public class StaffEntity {
     private String firstName;
     private String lastName;
     private String designation;
-    private Enum<Gender> gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     private Date joinDate;
     private Date DOB;
     private String address01;
@@ -32,6 +31,6 @@ public class StaffEntity {
     private String address05;
     private String contactNo;
     private String email;
-    private Enum<Role> role;
-
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
