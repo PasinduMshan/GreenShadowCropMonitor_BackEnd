@@ -19,7 +19,7 @@ public class VehicleEntity {
     private String status;
     private String remarks;
     @ManyToOne
-    @JoinColumn(name = "staffId")
+    @JoinColumn(name = "staffId", nullable = false)
     private StaffEntity staff;
 
 }

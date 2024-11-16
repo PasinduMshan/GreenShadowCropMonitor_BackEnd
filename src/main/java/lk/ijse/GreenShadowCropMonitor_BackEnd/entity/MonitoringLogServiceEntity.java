@@ -20,12 +20,12 @@ public class MonitoringLogServiceEntity {
     @Column(columnDefinition = "LONGTEXT")
     private String observedImage;
     @ManyToOne
-    @JoinColumn(name = "staffId")
+    @JoinColumn(name = "staffId", nullable = false)
     private StaffEntity staff;
     @ManyToOne
-    @JoinColumn(name = "fieldCode")
+    @JoinColumn(name = "fieldCode", nullable = false)
     private FieldEntity fields;
     @ManyToOne
-    @JoinColumn(name = "cropCode")
+    @JoinColumn(name = "cropCode", nullable = false)
     private CropEntity crop;
 }

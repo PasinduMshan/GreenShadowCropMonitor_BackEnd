@@ -21,9 +21,9 @@ public class CropEntity {
     private String cropCategory;
     private String cropSeason;
     @ManyToOne
-    @JoinColumn(name = "fieldCode")
+    @JoinColumn(name = "fieldCode" , nullable = false)
     private FieldEntity fields;
-    @OneToMany(mappedBy = "crop")
+    @OneToMany(mappedBy = "crop" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MonitoringLogServiceEntity> logServices;
 
 }

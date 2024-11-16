@@ -1,8 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +15,6 @@ public class UserEntity {
     @Id
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 }

@@ -17,7 +17,9 @@ public class EquipmentEntity {
     private String equipmentType;
     private String status;
     @OneToOne
+    @JoinColumn(name = "staffId", nullable = false)
     private StaffEntity staff;
     @OneToOne
+    @JoinColumn(name = "fieldCode", nullable = false)
     private FieldEntity fields;
 }
