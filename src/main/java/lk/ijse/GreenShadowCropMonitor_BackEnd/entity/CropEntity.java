@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,5 +22,8 @@ public class CropEntity {
     private String cropSeason;
     @ManyToOne
     @JoinColumn(name = "fieldCode")
-    private FieldEntity field;
+    private FieldEntity fields;
+    @OneToMany(mappedBy = "crop")
+    private List<MonitoringLogServiceEntity> logServices;
+
 }

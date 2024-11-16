@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +34,6 @@ public class StaffEntity {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "staff")
+    private List<MonitoringLogServiceEntity> logServices;
 }

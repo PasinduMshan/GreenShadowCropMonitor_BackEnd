@@ -24,6 +24,8 @@ public class FieldEntity {
     private Double fieldSize;
     private String fieldImage01;
     private String fieldImage02;
-    @OneToMany(mappedBy = "field")
+    @OneToMany(mappedBy = "fields")
     private List<CropEntity> crops;
+    @OneToMany(mappedBy = "fields")
+    private List<MonitoringLogServiceEntity> logServices;
 }
