@@ -36,4 +36,6 @@ public class StaffEntity {
     private Role role;
     @OneToMany(mappedBy = "staff")
     private List<MonitoringLogServiceEntity> logServices;
+    @OneToMany(mappedBy = "staff")
+    private List<VehicleEntity> vehicles;
 }
