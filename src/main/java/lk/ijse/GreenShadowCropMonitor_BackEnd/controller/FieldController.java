@@ -1,7 +1,9 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 @RestController
@@ -84,5 +87,21 @@ public class FieldController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FieldDTO> getAllFields() {
+        return fieldService.getAllFields();
+    }
+
+    @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldStatus getField(@PathVariable("fieldCode") String fieldCode) {
+        String regexForFieldID = "^FIELD-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForFieldID);
+        var regexMatcher = regexPattern.matcher(fieldCode);
+        if (!regexMatcher.matches()) {
+            return new SelectedErrorStatus(1, "Field ID is not valid");
+        }
+        return fieldService.getField(fieldCode);
     }
 }

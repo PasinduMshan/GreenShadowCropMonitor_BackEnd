@@ -1,6 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -22,7 +22,7 @@ public class Mapping {
         return modelMapper.map(fieldEntity, FieldDTO.class);
     }
 
-    public List<FieldDTO> toFieldDTO(List<FieldEntity> fieldEntityList) {
+    public List<FieldDTO> toFieldDTOList(List<FieldEntity> fieldEntityList) {
         return modelMapper.map(fieldEntityList, new TypeToken<List<FieldDTO>>() {}.getType());
     }
 }

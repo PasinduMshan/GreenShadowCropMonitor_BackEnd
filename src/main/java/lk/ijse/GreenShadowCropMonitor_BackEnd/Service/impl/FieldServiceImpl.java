@@ -1,8 +1,10 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.FieldDao;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
@@ -31,12 +33,18 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public List<FieldDTO> getAllFields() {
-        return List.of();
+        List<FieldEntity> allFields = fieldDao.findAll();
+        return mapping.toFieldDTOList(allFields);
     }
 
     @Override
-    public FieldDTO getNote(String fieldCode) {
-        return null;
+    public FieldStatus getField(String fieldCode) {
+        if (fieldDao.existsById(fieldCode)) {
+            FieldEntity selectedField = fieldDao.getReferenceById(fieldCode);
+            return mapping.toFieldDTO(selectedField);
+        } else {
+            return new SelectedErrorStatus(2, "Field with id " + fieldCode + "not found!");
+        }
     }
 
     @Override
