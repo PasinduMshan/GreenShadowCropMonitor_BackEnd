@@ -7,6 +7,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,12 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void deleteField(String fieldCode) {
-
+        Optional<FieldEntity> existedField = fieldDao.findById(fieldCode);
+        if (!existedField.isPresent()) {
+            throw new FieldNotFoundException("Field with id " + fieldCode + " not Found");
+        } else {
+            fieldDao.deleteById(fieldCode);
+        }
     }
 
     @Override
