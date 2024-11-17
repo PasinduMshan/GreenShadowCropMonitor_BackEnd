@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -45,6 +46,13 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void updateField(String fieldCode, FieldDTO fieldDTO) {
-
+        Optional<FieldEntity> tempField = fieldDao.findById(fieldCode);
+        if (tempField.isPresent()) {
+            tempField.get().setFieldName(fieldDTO.getFieldName());
+            tempField.get().setFieldLocation(fieldDTO.getFieldLocation());
+            tempField.get().setFieldSize(fieldDTO.getFieldSize());
+            tempField.get().setFieldImage01(fieldDTO.getFieldImage01());
+            tempField.get().setFieldImage02(fieldDTO.getFieldImage02());
+        }
     }
 }

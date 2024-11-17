@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("api/v1/fields")
@@ -27,21 +29,14 @@ public class FieldController {
             @RequestParam("fieldImage01") MultipartFile fieldImage01,
             @RequestParam("fieldImage02") MultipartFile fieldImage02
             ) {
-        System.out.println("Received fieldName: " + fieldName);
-        System.out.println("Received fieldLocation: " + fieldLocation);
-        System.out.println("Received fieldSize: " + fieldSize);
-        System.out.println("Received fieldImage01: " + fieldImage01.getOriginalFilename());
-        System.out.println("Received fieldImage02: " + fieldImage02.getOriginalFilename());
         String base64FieldImage01 = "";
         String base64FieldImage02 = "";
-
         try {
             byte[] bytesFieldImage01 = fieldImage01.getBytes();
             byte[] bytesFieldImage02 = fieldImage02.getBytes();
             base64FieldImage01 = AppUtil.fieldImage01ToBase64(bytesFieldImage01);
             base64FieldImage02 = AppUtil.fieldImage02ToBase64(bytesFieldImage02);
             String fieldCode = AppUtil.generateFieldCode();
-
             var buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldCode(fieldCode);
             buildFieldDTO.setFieldName(fieldName);
@@ -56,6 +51,38 @@ public class FieldController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
+            value = "/{fieldCode}")
+    public ResponseEntity<Void> updateField(
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("fieldLocation") String fieldLocation,
+            @RequestParam("fieldSize") Double fieldSize,
+            @RequestParam("fieldImage01") MultipartFile fieldImage01,
+            @RequestParam("fieldImage02") MultipartFile fieldImage02,
+            @PathVariable("fieldCode") String fieldCode
+    ) {
+        String base64FieldImage01 = "";
+        String base64FieldImage02 = "";
+        try {
+            byte[] bytesFieldImage01 = fieldImage01.getBytes();
+            byte[] bytesFieldImage02 = fieldImage02.getBytes();
+            base64FieldImage01 = AppUtil.fieldImage01ToBase64(bytesFieldImage01);
+            base64FieldImage02 = AppUtil.fieldImage02ToBase64(bytesFieldImage02);
+
+            var buildFieldDTO = new FieldDTO();
+            buildFieldDTO.setFieldCode(fieldCode);
+            buildFieldDTO.setFieldName(fieldName);
+            buildFieldDTO.setFieldLocation(fieldLocation);
+            buildFieldDTO.setFieldSize(fieldSize);
+            buildFieldDTO.setFieldImage01(base64FieldImage01);
+            buildFieldDTO.setFieldImage02(base64FieldImage02);
+            fieldService.updateField(fieldCode ,buildFieldDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
