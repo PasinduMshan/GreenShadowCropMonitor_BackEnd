@@ -16,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
-
 @RestController
 @RequestMapping("api/v1/fields")
 @CrossOrigin
@@ -76,7 +73,6 @@ public class FieldController {
             byte[] bytesFieldImage02 = fieldImage02.getBytes();
             base64FieldImage01 = AppUtil.fieldImage01ToBase64(bytesFieldImage01);
             base64FieldImage02 = AppUtil.fieldImage02ToBase64(bytesFieldImage02);
-
             var buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldCode(fieldCode);
             buildFieldDTO.setFieldName(fieldName);
