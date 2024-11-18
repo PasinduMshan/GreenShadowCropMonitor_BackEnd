@@ -1,6 +1,8 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
@@ -35,7 +37,8 @@ public class StaffController {
         }
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = {"/{staffId}"})
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
+            value = {"/{staffId}"})
     public ResponseEntity<Void> updateStaff(@RequestBody StaffDTO staffDTO, @PathVariable String staffId) {
         String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
         Pattern regexPattern = Pattern.compile(regexForStaffID);
@@ -56,5 +59,16 @@ public class StaffController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDTO> getAllStaff() {
         return staffService.getAllStaff();
+    }
+
+    @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StaffStatus getStaff(@PathVariable String staffId) {
+        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForStaffID);
+        var regexMatcher = regexPattern.matcher(staffId);
+        if (!regexMatcher.matches()) {
+            return new SelectedErrorStatus(1, "Staff ID is not valid");
+        }
+        return staffService.getStaff(staffId);
     }
 }

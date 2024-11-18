@@ -1,6 +1,7 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.StaffDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
@@ -41,7 +42,12 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public StaffStatus getStaff(String staffId) {
-        return null;
+        if (staffDao.existsById(staffId)) {
+            StaffEntity selectedStaff = staffDao.getReferenceById(staffId);
+            return mapping.toStaffDTO(selectedStaff);
+        } else {
+            return new SelectedErrorStatus(2, "Staff with id " + staffId + "not found!");
+        }
     }
 
     @Override
