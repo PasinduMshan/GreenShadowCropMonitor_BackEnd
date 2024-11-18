@@ -4,6 +4,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.StaffDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
@@ -34,7 +35,8 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffDTO> getAllStaff() {
-        return List.of();
+        List<StaffEntity> allStaff = staffDao.findAll();
+        return mapping.toStaffDTOList(allStaff);
     }
 
     @Override
