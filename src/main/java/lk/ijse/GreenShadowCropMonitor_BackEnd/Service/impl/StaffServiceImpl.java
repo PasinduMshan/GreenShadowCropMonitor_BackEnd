@@ -6,12 +6,14 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,6 +49,23 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void updateStaff(String staffId, StaffDTO staffDTO) {
-
+        Optional<StaffEntity> staffEntity = staffDao.findById(staffId);
+        if (!staffEntity.isPresent()) {
+            throw new StaffNotFoundException("Staff Not Found");
+        } else {
+            staffEntity.get().setFirstName(staffDTO.getFirstName());
+            staffEntity.get().setLastName(staffDTO.getLastName());
+            staffEntity.get().setDesignation(staffDTO.getDesignation());
+            staffEntity.get().setGender(staffDTO.getGender());
+            staffEntity.get().setJoinDate(staffDTO.getJoinDate());
+            staffEntity.get().setDateOfBirth(staffDTO.getDateOfBirth());
+            staffEntity.get().setAddress01(staffDTO.getAddress01());
+            staffEntity.get().setAddress02(staffDTO.getAddress02());
+            staffEntity.get().setAddress03(staffDTO.getAddress03());
+            staffEntity.get().setAddress04(staffDTO.getAddress04());
+            staffEntity.get().setAddress05(staffDTO.getAddress05());
+            staffEntity.get().setEmail(staffDTO.getEmail());
+            staffEntity.get().setRole(staffDTO.getRole());
+        }
     }
 }
