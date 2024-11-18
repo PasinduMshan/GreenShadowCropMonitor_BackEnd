@@ -23,7 +23,7 @@ public class StaffDTO implements SuperDTO, StaffStatus {
     private String designation;
     private Gender gender;
     private Date joinDate;
-    private Date DOB;
+    private Date dateOfBirth;
     private String address01;
     private String address02;
     private String address03;

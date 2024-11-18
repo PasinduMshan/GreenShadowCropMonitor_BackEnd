@@ -24,7 +24,7 @@ public class StaffEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private Date joinDate;
-    private Date DOB;
+    private Date dateOfBirth;
     private String address01;
     private String address02;
     private String address03;
