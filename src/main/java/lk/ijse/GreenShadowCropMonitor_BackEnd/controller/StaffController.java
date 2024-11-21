@@ -62,7 +62,7 @@ public class StaffController {
     }
 
     @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public StaffStatus getStaff(@PathVariable String staffId) {
+    public StaffStatus getStaff(@PathVariable("staffId") String staffId) {
         String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
         Pattern regexPattern = Pattern.compile(regexForStaffID);
         var regexMatcher = regexPattern.matcher(staffId);
@@ -70,5 +70,21 @@ public class StaffController {
             return new SelectedErrorStatus(1, "Staff ID is not valid");
         }
         return staffService.getStaff(staffId);
+    }
+
+    @DeleteMapping(value = "/{staffId}")
+    public ResponseEntity<Void> deleteStaff(@PathVariable("staffId") String staffId) {
+        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForStaffID);
+        var regexMatcher = regexPattern.matcher(staffId);
+        try {
+            if (!regexMatcher.matches()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            staffService.deleteStaff(staffId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

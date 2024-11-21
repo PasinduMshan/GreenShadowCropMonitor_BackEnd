@@ -8,6 +8,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,18 @@ public class StaffServiceImpl implements StaffService {
             StaffEntity selectedStaff = staffDao.getReferenceById(staffId);
             return mapping.toStaffDTO(selectedStaff);
         } else {
-            return new SelectedErrorStatus(2, "Staff with id " + staffId + "not found!");
+            return new SelectedErrorStatus(2, "Staff with id " + staffId + " not found!");
         }
     }
 
     @Override
     public void deleteStaff(String staffId) {
-
+        Optional<StaffEntity> existedStaff = staffDao.findById(staffId);
+        if (!existedStaff.isPresent()) {
+            throw new StaffNotFoundException("Staff with id " + staffId + " not found!");
+        } else {
+            staffDao.deleteById(staffId);
+        }
     }
 
     @Override
