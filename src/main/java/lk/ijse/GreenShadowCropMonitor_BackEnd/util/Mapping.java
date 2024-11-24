@@ -1,7 +1,9 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.EquipmentDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.EquipmentEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import org.modelmapper.ModelMapper;
@@ -35,4 +37,15 @@ public class Mapping {
     public List<StaffDTO> toStaffDTOList(List<StaffEntity> staffEntityList) {
         return modelMapper.map(staffEntityList, new TypeToken<List<StaffDTO>>() {}.getType());
     }
+    public EquipmentDTO toEquipmentDTO(EquipmentEntity equipmentEntity) {
+        EquipmentDTO equipmentDTO = new EquipmentDTO();
+        equipmentDTO.setEquipmentId(equipmentEntity.getEquipmentId());
+        equipmentDTO.setEquipmentName(equipmentEntity.getEquipmentName());
+        equipmentDTO.setEquipmentType(equipmentEntity.getEquipmentType());
+        equipmentDTO.setStatus(equipmentEntity.getStatus());
+        equipmentDTO.setStaffId(equipmentEntity.getStaff().getStaffId());
+        equipmentDTO.setFieldCode(equipmentEntity.getFields().getFieldCode());
+        return equipmentDTO;
+    }
+
 }

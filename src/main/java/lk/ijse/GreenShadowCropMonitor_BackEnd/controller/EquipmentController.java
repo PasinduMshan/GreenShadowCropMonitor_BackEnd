@@ -1,6 +1,8 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.EquipmentService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.EquipmentStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.EquipmentDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
@@ -54,5 +56,16 @@ public class EquipmentController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public EquipmentStatus getEquipment(@PathVariable("equipmentId") String equipmentId) {
+        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
+        var regexMatcher = regexPattern.matcher(equipmentId);
+        if (!regexMatcher.matches()) {
+            return new SelectedErrorStatus(1, "Equipment ID is not valid");
+        }
+        return equipmentService.getEquipment(equipmentId);
     }
 }

@@ -3,6 +3,7 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.EquipmentService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.EquipmentDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.EquipmentStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.EquipmentDTO;
@@ -57,7 +58,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public EquipmentStatus getEquipment(String equipmentID) {
-        return null;
+        if (equipmentDao.existsById(equipmentID)) {
+            EquipmentEntity equipmentEntity = equipmentDao.getReferenceById(equipmentID);
+            return mapping.toEquipmentDTO(equipmentEntity);
+        } else {
+            return new SelectedErrorStatus(2, "Equipment with id " + equipmentID + "not found!");
+        }
     }
 
     @Override
