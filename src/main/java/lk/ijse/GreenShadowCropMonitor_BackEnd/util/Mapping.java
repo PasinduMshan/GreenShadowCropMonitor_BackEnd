@@ -11,6 +11,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -37,6 +38,7 @@ public class Mapping {
     public List<StaffDTO> toStaffDTOList(List<StaffEntity> staffEntityList) {
         return modelMapper.map(staffEntityList, new TypeToken<List<StaffDTO>>() {}.getType());
     }
+
     public EquipmentDTO toEquipmentDTO(EquipmentEntity equipmentEntity) {
         EquipmentDTO equipmentDTO = new EquipmentDTO();
         equipmentDTO.setEquipmentId(equipmentEntity.getEquipmentId());
@@ -47,5 +49,12 @@ public class Mapping {
         equipmentDTO.setFieldCode(equipmentEntity.getFields().getFieldCode());
         return equipmentDTO;
     }
-
+    public List<EquipmentDTO> toEquipmentDTOList(List<EquipmentEntity> equipmentEntityList) {
+        List<EquipmentDTO> dtoList = new ArrayList<>();
+        for (EquipmentEntity entity : equipmentEntityList) {
+            EquipmentDTO dto = toEquipmentDTO(entity);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 }
