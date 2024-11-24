@@ -12,6 +12,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.EquipmentNotFoundException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void deleteEquipment(String equipmentID) {
-
+        Optional<EquipmentEntity> equipmentEntity = equipmentDao.findById(equipmentID);
+        if (!equipmentEntity.isPresent()) {
+            throw new EquipmentNotFoundException("Equipment with id " + equipmentID + " not found!");
+        } else {
+            equipmentDao.deleteById(equipmentID);
+        }
     }
 
     @Override

@@ -16,10 +16,10 @@ public class EquipmentEntity {
     private String equipmentName;
     private String equipmentType;
     private String status;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "staffId", nullable = false)
     private StaffEntity staff;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fieldCode", nullable = false)
     private FieldEntity fields;
 }

@@ -27,4 +27,6 @@ public class FieldEntity {
     private List<CropEntity> crops;
     @OneToMany(mappedBy = "fields", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MonitoringLogServiceEntity> logServices;
+    @OneToMany(mappedBy = "fields", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<EquipmentEntity> equipments;
 }
