@@ -12,4 +12,5 @@ public interface StaffService {
     StaffStatus getStaff(String staffId);
     void deleteStaff(String staffId);
     void updateStaff(String staffId,StaffDTO staffDTO);
+    StaffDTO getStaffById(String staffId);
 }

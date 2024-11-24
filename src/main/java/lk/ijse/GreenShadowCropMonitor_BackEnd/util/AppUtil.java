@@ -16,4 +16,7 @@ public class AppUtil {
     public static String generateStaffCode() {
         return "STAFF-"+ UUID.randomUUID();
     }
+    public static String generateEquipmentCode() {
+        return "EQUIPMENT-"+ UUID.randomUUID();
+    }
 }

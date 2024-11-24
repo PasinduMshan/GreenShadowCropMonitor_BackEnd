@@ -5,10 +5,8 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStat
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.StaffDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import java.util.Optional;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffDao staffDao;
-
     @Autowired
     private Mapping mapping;
 
@@ -80,6 +77,16 @@ public class StaffServiceImpl implements StaffService {
             staffEntity.get().setAddress05(staffDTO.getAddress05());
             staffEntity.get().setEmail(staffDTO.getEmail());
             staffEntity.get().setRole(staffDTO.getRole());
+        }
+    }
+
+    @Override
+    public StaffDTO getStaffById(String staffId) {
+        if (staffDao.existsById(staffId)) {
+            StaffEntity selectedStaff = staffDao.getReferenceById(staffId);
+            return mapping.toStaffDTO(selectedStaff);
+        } else {
+            throw new StaffNotFoundException("Staff Not Found");
         }
     }
 }
