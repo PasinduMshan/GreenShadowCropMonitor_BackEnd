@@ -6,7 +6,6 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStat
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.VehicleDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.VehicleStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.VehicleDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.EquipmentEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.VehicleEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
