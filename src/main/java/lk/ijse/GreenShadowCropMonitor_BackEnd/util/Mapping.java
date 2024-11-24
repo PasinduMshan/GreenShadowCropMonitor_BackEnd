@@ -3,9 +3,11 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.EquipmentDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.VehicleDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.EquipmentEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.VehicleEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,17 @@ public class Mapping {
             dtoList.add(dto);
         }
         return dtoList;
+    }
+
+    public VehicleDTO toVehicleDTO(VehicleEntity vehicleEntity) {
+        VehicleDTO vehicleDTO = new VehicleDTO();
+        vehicleDTO.setVehicleCode(vehicleEntity.getVehicleCode());
+        vehicleDTO.setLicensePlateNumber(vehicleEntity.getLicensePlateNumber());
+        vehicleDTO.setVehicleCategory(vehicleEntity.getVehicleCategory());
+        vehicleDTO.setFuelType(vehicleEntity.getFuelType());
+        vehicleDTO.setStatus(vehicleEntity.getStatus());
+        vehicleDTO.setRemarks(vehicleEntity.getRemarks());
+        vehicleDTO.setStaffId(vehicleEntity.getStaff().getStaffId());
+        return vehicleDTO;
     }
 }
