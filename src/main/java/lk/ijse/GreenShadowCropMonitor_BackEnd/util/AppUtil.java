@@ -19,4 +19,7 @@ public class AppUtil {
     public static String generateEquipmentCode() {
         return "EQUIPMENT-"+ UUID.randomUUID();
     }
+    public static String generateVehicleCode() {
+        return "VEHICLE-"+ UUID.randomUUID();
+    }
 }
