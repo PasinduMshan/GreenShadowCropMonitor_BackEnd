@@ -1,9 +1,7 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.EquipmentService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.VehicleService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.EquipmentStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.VehicleStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.VehicleDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
@@ -15,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
@@ -65,5 +64,10 @@ public class VehicleController {
             return new SelectedErrorStatus(1, "Vehicle Code Not Found");
         }
         return vehicleService.getVehicle(vehicleCode);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<VehicleDTO> getAllVehicles() {
+        return vehicleService.getAllVehicles();
     }
 }

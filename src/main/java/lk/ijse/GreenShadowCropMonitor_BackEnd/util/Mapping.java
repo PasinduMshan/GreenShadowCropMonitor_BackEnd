@@ -71,4 +71,13 @@ public class Mapping {
         vehicleDTO.setStaffId(vehicleEntity.getStaff().getStaffId());
         return vehicleDTO;
     }
+
+    public List<VehicleDTO> toVehicleDTOList(List<VehicleEntity> vehicleEntityList) {
+        List<VehicleDTO> dtoList = new ArrayList<>();
+        for (VehicleEntity entity : vehicleEntityList) {
+            VehicleDTO dto = toVehicleDTO(entity);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 }
