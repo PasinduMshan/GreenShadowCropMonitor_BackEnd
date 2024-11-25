@@ -67,10 +67,8 @@ public class FieldController {
         String base64FieldImage01 = "";
         String base64FieldImage02 = "";
         try {
-            byte[] bytesFieldImage01 = fieldImage01.getBytes();
-            byte[] bytesFieldImage02 = fieldImage02.getBytes();
-            base64FieldImage01 = AppUtil.fieldImage01ToBase64(bytesFieldImage01);
-            base64FieldImage02 = AppUtil.fieldImage02ToBase64(bytesFieldImage02);
+            base64FieldImage01 = AppUtil.imageFileToBase64(fieldImage01.getBytes());
+            base64FieldImage02 = AppUtil.imageFileToBase64(fieldImage02.getBytes());
             var buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldCode(fieldCode);
             buildFieldDTO.setFieldName(fieldName);
