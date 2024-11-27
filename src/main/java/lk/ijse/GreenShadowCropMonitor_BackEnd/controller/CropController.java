@@ -99,4 +99,20 @@ public class CropController {
         return cropService.getCrop(cropCode);
     }
 
+    @DeleteMapping(value = "/{cropCode}")
+    public ResponseEntity<Void> deleteCrop(@PathVariable("cropCode") String cropCode) {
+        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForCropID);
+        var regexMatcher = regexPattern.matcher(cropCode);
+        try {
+            if (!regexMatcher.matches()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            cropService.deleteCrop(cropCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

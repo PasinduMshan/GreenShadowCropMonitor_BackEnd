@@ -14,6 +14,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.CropNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,12 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void deleteCrop(String cropCode) {
-
+        Optional<CropEntity> entity = cropDao.findById(cropCode);
+        if (!entity.isPresent()) {
+            throw new FieldNotFoundException("Crop with id " + cropCode + " not Found");
+        } else {
+            cropDao.deleteById(cropCode);
+        }
     }
 
     @Override
