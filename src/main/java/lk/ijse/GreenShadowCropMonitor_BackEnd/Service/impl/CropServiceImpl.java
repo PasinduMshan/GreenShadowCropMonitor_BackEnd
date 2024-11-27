@@ -1,7 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.EquipmentService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.CropDao;
@@ -12,6 +11,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogServiceDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.CropEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.CropNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -72,7 +73,20 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void updateCrop(String cropCode, CropDTO cropDTO) {
+        FieldDTO field = fieldService.getFieldById(cropDTO.getFieldCode());
+        FieldEntity fieldEntity = mapping.toFieldEntity(field);
 
+        Optional<CropEntity> cropEntity = cropDao.findById(cropCode);
+        if (!cropEntity.isPresent()) {
+            throw new CropNotFoundException("Crop not found!");
+        } else {
+            cropEntity.get().setCropCommonName(cropDTO.getCropCommonName());
+            cropEntity.get().setCropScientificName(cropDTO.getCropScientificName());
+            cropEntity.get().setCropImage(cropDTO.getCropImage());
+            cropEntity.get().setCropCategory(cropDTO.getCropCategory());
+            cropEntity.get().setCropSeason(cropDTO.getCropSeason());
+            cropEntity.get().setFields(fieldEntity);
+        }
     }
 
     @Override
