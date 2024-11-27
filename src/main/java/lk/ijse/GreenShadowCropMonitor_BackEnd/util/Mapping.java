@@ -1,8 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.*;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.*;
 import org.modelmapper.ModelMapper;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -84,6 +81,27 @@ public class Mapping {
         return modelMapper.map(cropDTO, CropEntity.class);
     }
 
+
+    public CropDTO toCropDTO(CropEntity cropEntity) {
+        CropDTO cropDTO = new CropDTO();
+        cropDTO.setCropCode(cropEntity.getCropCode());
+        cropDTO.setCropCommonName(cropEntity.getCropCommonName());
+        cropDTO.setCropScientificName(cropEntity.getCropScientificName());
+        cropDTO.setCropImage(cropEntity.getCropImage());
+        cropDTO.setCropCategory(cropEntity.getCropCategory());
+        cropDTO.setCropSeason(cropEntity.getCropSeason());
+        cropDTO.setFieldCode(cropEntity.getFields().getFieldCode());
+        return cropDTO;
+    }
+
+    public List<CropDTO> toCropDTOList(List<CropEntity> cropEntityList) {
+        List<CropDTO> dtoList = new ArrayList<>();
+        for (CropEntity entity : cropEntityList) {
+            CropDTO dto = toCropDTO(entity);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 
 
 }

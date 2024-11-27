@@ -1,6 +1,8 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.CropStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.CropDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.AppUtil;
@@ -10,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/crop")
@@ -76,6 +81,22 @@ public class CropController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CropDTO> getAllCrops() {
+        return cropService.getAllCrops();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{cropCode}")
+    public CropStatus getCrop(@PathVariable("cropCode") String cropCode) {
+        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForCropID);
+        var regexMatcher = regexPattern.matcher(cropCode);
+        if (!regexMatcher.matches()) {
+            return new SelectedErrorStatus(1, "Crop ID is not valid");
+        }
+        return cropService.getCrop(cropCode);
     }
 
 }

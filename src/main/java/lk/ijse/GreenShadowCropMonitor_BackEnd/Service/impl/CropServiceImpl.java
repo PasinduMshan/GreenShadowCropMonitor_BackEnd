@@ -3,8 +3,9 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.CropDao;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.EquipmentStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.CropStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.CropDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogServiceDTO;
@@ -58,12 +59,18 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public List<CropDTO> getAllCrops() {
-        return List.of();
+        List<CropEntity> cropEntities = cropDao.findAll();
+        return mapping.toCropDTOList(cropEntities);
     }
 
     @Override
-    public EquipmentStatus getCrop(String cropCode) {
-        return null;
+    public CropStatus getCrop(String cropCode) {
+        if (cropDao.existsById(cropCode)) {
+            CropEntity cropEntity = cropDao.getReferenceById(cropCode);
+            return mapping.toCropDTO(cropEntity);
+        } else {
+            return new SelectedErrorStatus(2, "Crop with id " + cropCode + "not found!");
+        }
     }
 
     @Override
