@@ -1,15 +1,15 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "monitoring_log_service")
 public class MonitoringLogServiceEntity {

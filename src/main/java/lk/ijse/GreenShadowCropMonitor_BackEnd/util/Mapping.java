@@ -1,25 +1,24 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.EquipmentDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.VehicleDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.EquipmentEntity;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.StaffEntity;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.VehicleEntity;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.*;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
 public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
+
 
     public FieldEntity toFieldEntity(FieldDTO fieldDTO) {
         return modelMapper.map(fieldDTO, FieldEntity.class);
@@ -80,4 +79,11 @@ public class Mapping {
         }
         return dtoList;
     }
+
+    public CropEntity toCropEntity(CropDTO cropDTO) {
+        return modelMapper.map(cropDTO, CropEntity.class);
+    }
+
+
+
 }

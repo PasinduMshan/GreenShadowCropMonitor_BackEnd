@@ -1,15 +1,15 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "crop")
 public class CropEntity {
@@ -17,6 +17,7 @@ public class CropEntity {
     private String cropCode;
     private String cropCommonName;
     private String cropScientificName;
+    @Column(columnDefinition = "LONGTEXT")
     private String cropImage;
     private String cropCategory;
     private String cropSeason;

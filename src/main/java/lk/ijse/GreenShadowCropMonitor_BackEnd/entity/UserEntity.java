@@ -2,13 +2,13 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
 import jakarta.persistence.*;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "user")
 public class UserEntity {

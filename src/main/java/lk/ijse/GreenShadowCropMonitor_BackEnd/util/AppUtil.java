@@ -20,6 +20,6 @@ public class AppUtil {
         return "VEHICLE-"+ UUID.randomUUID();
     }
     public static String generateCropCode() {
-        return "CROP -"+ UUID.randomUUID();
+        return "CROP-"+ UUID.randomUUID();
     }
 }

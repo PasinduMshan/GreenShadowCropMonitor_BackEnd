@@ -1,14 +1,18 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl;
 
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.CropStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.SuperDTO;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CropDTO implements SuperDTO {
+public class CropDTO implements SuperDTO, CropStatus {
     private String cropCode;
     private String cropCommonName;
     private String cropScientificName;
@@ -16,4 +20,5 @@ public class CropDTO implements SuperDTO {
     private String cropCategory;
     private String cropSeason;
     private String fieldCode;
+    private List<MonitoringLogServiceDTO> logServices;
 }
