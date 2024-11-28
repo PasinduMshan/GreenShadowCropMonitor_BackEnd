@@ -34,7 +34,7 @@ public class StaffEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MonitoringLogServiceEntity> logServices;
+    private List<MonitoringLogEntity> logServices;
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VehicleEntity> vehicles;
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -24,6 +24,6 @@ public class CropEntity {
     @JoinColumn(name = "fieldCode" , nullable = false)
     private FieldEntity fields;
     @OneToMany(mappedBy = "crop" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MonitoringLogServiceEntity> logServices;
+    private List<MonitoringLogEntity> logServices;
 
 }

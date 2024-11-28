@@ -9,7 +9,6 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.CropDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.CropEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.CropNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;

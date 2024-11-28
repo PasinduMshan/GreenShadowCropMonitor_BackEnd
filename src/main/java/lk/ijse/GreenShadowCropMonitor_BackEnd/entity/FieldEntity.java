@@ -2,7 +2,6 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.geo.Point;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class FieldEntity {
     @OneToMany(mappedBy = "fields", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CropEntity> crops;
     @OneToMany(mappedBy = "fields", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MonitoringLogServiceEntity> logServices;
+    private List<MonitoringLogEntity> logServices;
     @OneToMany(mappedBy = "fields", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EquipmentEntity> equipments;
 }
