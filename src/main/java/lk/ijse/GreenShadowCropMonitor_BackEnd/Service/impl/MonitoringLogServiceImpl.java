@@ -4,6 +4,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.MonitoringLogService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.MonitoringLogDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.MonitoringLogStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogDTO;
@@ -54,7 +55,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public MonitoringLogStatus getMonitorLog(String logCode) {
-        return null;
+        if (monitoringLogDao.existsById(logCode)) {
+            MonitoringLogEntity referenceById = monitoringLogDao.getReferenceById(logCode);
+            return mapping.toLogServiceDTO(referenceById);
+        } else {
+            return new SelectedErrorStatus(2, "Monitor Log with id " + logCode + "not found!");
+        }
     }
 
     @Override
