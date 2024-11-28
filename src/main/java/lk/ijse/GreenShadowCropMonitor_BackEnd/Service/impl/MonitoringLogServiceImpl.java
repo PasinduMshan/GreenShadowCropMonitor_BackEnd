@@ -65,7 +65,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void deleteMonitorLog(String logCode) {
-
+        Optional<MonitoringLogEntity> monitoringLog = monitoringLogDao.findById(logCode);
+        if (!monitoringLog.isPresent()) {
+            throw new FieldNotFoundException("Monitor Log with id " + logCode + " not Found");
+        } else {
+            monitoringLogDao.deleteById(logCode);
+        }
     }
 
     @Override

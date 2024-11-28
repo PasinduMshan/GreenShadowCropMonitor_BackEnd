@@ -2,9 +2,7 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.MonitoringLogService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.FieldStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.MonitoringLogStatus;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.AppUtil;
@@ -103,6 +101,22 @@ public class MonitoringLogController {
             return new SelectedErrorStatus(1, "Monitor Log ID is not valid");
         }
         return monitoringLogService.getMonitorLog(logCode);
+    }
+
+    @DeleteMapping(value = "/{logCode}")
+    public ResponseEntity<Void> deleteMonitorLogDetails(@PathVariable("logCode") String logCode) {
+        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForID);
+        var regexMatcher = regexPattern.matcher(logCode);
+        try {
+            if (!regexMatcher.matches()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            monitoringLogService.deleteMonitorLog(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
