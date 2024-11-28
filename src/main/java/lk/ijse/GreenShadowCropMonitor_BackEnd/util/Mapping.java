@@ -98,4 +98,25 @@ public class Mapping {
         }
         return dtoList;
     }
+
+    public List<MonitoringLogDTO> toLogServicesDTOList(List<MonitoringLogEntity> logEntities) {
+        List<MonitoringLogDTO> logServicesDTOList = new ArrayList<>();
+        for (MonitoringLogEntity entity : logEntities) {
+            MonitoringLogDTO logServiceDTO = toLogServiceDTO(entity);
+            logServicesDTOList.add(logServiceDTO);
+        }
+        return logServicesDTOList;
+    }
+
+    public MonitoringLogDTO toLogServiceDTO(MonitoringLogEntity logEntity) {
+        MonitoringLogDTO dto = new MonitoringLogDTO();
+        dto.setLogCode(logEntity.getLogCode());
+        dto.setLogDate(logEntity.getLogDate());
+        dto.setLogDetails(logEntity.getLogDetails());
+        dto.setObservedImage(logEntity.getObservedImage());
+        dto.setStaffId(logEntity.getStaff().getStaffId());
+        dto.setFieldCode(logEntity.getFields().getFieldCode());
+        dto.setCropCode(logEntity.getCrop().getCropCode());
+        return dto;
+    }
 }

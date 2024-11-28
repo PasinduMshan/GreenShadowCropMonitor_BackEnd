@@ -48,7 +48,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public List<MonitoringLogDTO> getAllMonitorLog() {
-        return List.of();
+        List<MonitoringLogEntity> entityList = monitoringLogDao.findAll();
+        return mapping.toLogServicesDTOList(entityList);
     }
 
     @Override
@@ -106,4 +107,5 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         logServiceEntity.setCrop(cropEntity);
         return logServiceEntity;
     }
+
 }

@@ -85,4 +85,9 @@ public class MonitoringLogController {
         }
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MonitoringLogDTO> getAllMonitorLogDetails() {
+        return monitoringLogService.getAllMonitorLog();
+    }
+
 }
