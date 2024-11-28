@@ -2,8 +2,6 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.SuperDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.VehicleEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Gender;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Role;
 import lombok.AllArgsConstructor;
@@ -32,6 +30,6 @@ public class StaffDTO implements SuperDTO, StaffStatus {
     private String contactNo;
     private String email;
     private Role role;
-    private List<MonitoringLogServiceDTO> logServices;
+    private List<MonitoringLogDTO> logServices;
     private List<VehicleDTO> vehicles;
 }

@@ -2,13 +2,11 @@ package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.StaffService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.CropDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.CropStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.CropDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.FieldDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogServiceDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.CropEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.MonitoringLogServiceEntity;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,27 +29,13 @@ public class CropServiceImpl implements CropService {
     private CropDao cropDao;
     @Autowired
     private Mapping mapping;
+
     @Autowired
     FieldService fieldService;
-    @Autowired
-    StaffService staffService;
 
     @Override
     public void saveCrop(CropDTO cropDTO) throws DataPersistException {
-        FieldDTO field = fieldService.getFieldById(cropDTO.getFieldCode());
-        FieldEntity fieldEntity = mapping.toFieldEntity(field);
-
-        CropEntity cropEntity = new CropEntity();
-        cropEntity.setCropCode(cropDTO.getCropCode());
-        cropEntity.setCropCommonName(cropDTO.getCropCommonName());
-        cropEntity.setCropScientificName(cropDTO.getCropScientificName());
-        cropEntity.setCropImage(cropDTO.getCropImage());
-        cropEntity.setCropCategory(cropDTO.getCropCategory());
-        cropEntity.setCropSeason(cropDTO.getCropSeason());
-        cropEntity.setFields(fieldEntity);
-        List<MonitoringLogServiceEntity> logServicesEntityList = getLogServicesEntityList(cropDTO.getLogServices());
-        cropEntity.setLogServices(logServicesEntityList);
-        CropEntity saveCrop = cropDao.save(cropEntity);
+        CropEntity saveCrop = cropDao.save(toCropEntity(cropDTO));
         if (saveCrop == null) {
             throw new DataPersistException("Crop not saved!");
         }
@@ -104,30 +87,28 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public CropDTO getCropById(String cropCode) {
-        return null;
+        if (cropDao.existsById(cropCode)) {
+            CropEntity cropEntity = cropDao.getReferenceById(cropCode);
+            return mapping.toCropDTO(cropEntity);
+        } else {
+            throw new FieldNotFoundException("Field Not Found");
+        }
     }
 
-    public List<MonitoringLogServiceEntity> getLogServicesEntityList(List<MonitoringLogServiceDTO> LogServiceDTOS) {
-        if (LogServiceDTOS == null || LogServiceDTOS.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<MonitoringLogServiceEntity> logServicesEntityList = new ArrayList<>();
-        for (MonitoringLogServiceDTO dto : LogServiceDTOS) {
-            MonitoringLogServiceEntity entity = getMonitoringLogServiceEntity(dto);
-            logServicesEntityList.add(entity);
-        }
-        return logServicesEntityList;
+    @Override
+    public CropEntity toCropEntity(CropDTO cropDTO) {
+        FieldDTO field = fieldService.getFieldById(cropDTO.getFieldCode());
+        FieldEntity fieldEntity = mapping.toFieldEntity(field);
+        CropEntity cropEntity = new CropEntity();
+        cropEntity.setCropCode(cropDTO.getCropCode());
+        cropEntity.setCropCommonName(cropDTO.getCropCommonName());
+        cropEntity.setCropScientificName(cropDTO.getCropScientificName());
+        cropEntity.setCropImage(cropDTO.getCropImage());
+        cropEntity.setCropCategory(cropDTO.getCropCategory());
+        cropEntity.setCropSeason(cropDTO.getCropSeason());
+        cropEntity.setFields(fieldEntity);
+        cropEntity.setLogServices(new ArrayList<>());
+        return cropEntity;
     }
 
-    public MonitoringLogServiceEntity getMonitoringLogServiceEntity(MonitoringLogServiceDTO monitoringLogServiceDTO) {
-        MonitoringLogServiceEntity logServiceEntity = new MonitoringLogServiceEntity();
-        logServiceEntity.setLogCode(monitoringLogServiceDTO.getLogCode());
-        logServiceEntity.setLogDate(monitoringLogServiceDTO.getLogDate());
-        logServiceEntity.setLogDetails(monitoringLogServiceDTO.getLogDetails());
-        logServiceEntity.setObservedImage(monitoringLogServiceDTO.getObservedImage());
-        logServiceEntity.setStaff(mapping.toStaffEntity(staffService.getStaffById(monitoringLogServiceDTO.getStaffId())));
-        logServiceEntity.setFields(mapping.toFieldEntity(fieldService.getFieldById(monitoringLogServiceDTO.getFieldCode())));
-        logServiceEntity.setCrop(mapping.toCropEntity(getCropById(monitoringLogServiceDTO.getCropCode())));
-        return logServiceEntity;
-    }
 }

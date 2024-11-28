@@ -9,7 +9,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "monitoring_log_service")
 public class MonitoringLogServiceEntity {

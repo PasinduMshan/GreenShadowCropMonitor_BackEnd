@@ -1,6 +1,5 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.util;
 
-import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.FieldService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.*;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.*;
 import org.modelmapper.ModelMapper;
@@ -9,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 
 @Component
 public class Mapping {
@@ -77,11 +78,6 @@ public class Mapping {
         return dtoList;
     }
 
-    public CropEntity toCropEntity(CropDTO cropDTO) {
-        return modelMapper.map(cropDTO, CropEntity.class);
-    }
-
-
     public CropDTO toCropDTO(CropEntity cropEntity) {
         CropDTO cropDTO = new CropDTO();
         cropDTO.setCropCode(cropEntity.getCropCode());
@@ -102,6 +98,4 @@ public class Mapping {
         }
         return dtoList;
     }
-
-
 }

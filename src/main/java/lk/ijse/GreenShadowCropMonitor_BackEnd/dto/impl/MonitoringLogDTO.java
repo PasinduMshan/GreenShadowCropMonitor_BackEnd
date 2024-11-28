@@ -1,5 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl;
 
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.MonitoringLogStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.SuperDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MonitoringLogServiceDTO implements SuperDTO {
+public class MonitoringLogDTO implements SuperDTO, MonitoringLogStatus {
     private String logCode;
     private Date logDate;
     private String logDetails;

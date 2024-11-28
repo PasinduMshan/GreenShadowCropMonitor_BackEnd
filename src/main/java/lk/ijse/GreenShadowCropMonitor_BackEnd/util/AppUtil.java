@@ -22,4 +22,7 @@ public class AppUtil {
     public static String generateCropCode() {
         return "CROP-"+ UUID.randomUUID();
     }
+    public static String generateMonitorLogCode() {
+        return "LOG-"+ UUID.randomUUID();
+    }
 }
