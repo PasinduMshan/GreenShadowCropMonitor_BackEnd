@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class SelectedErrorStatus implements FieldStatus, StaffStatus, VehicleStatus, EquipmentStatus, CropStatus,
-        MonitoringLogStatus {
+        MonitoringLogStatus, UserStatus {
     private int statusCode;
     private String statusMessage;
 }

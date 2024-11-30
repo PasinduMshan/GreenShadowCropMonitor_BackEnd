@@ -1,6 +1,9 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.UserService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.UserStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
@@ -55,5 +58,16 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserStatus getUser(@PathVariable("email") String email) {
+        String regexForEmail = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
+        Pattern regexPattern = Pattern.compile(regexForEmail);
+        var regexMatcher = regexPattern.matcher(email);
+        if (!regexMatcher.matches()) {
+            return new SelectedErrorStatus(1, "User email is not valid");
+        }
+        return userService.getUser(email);
     }
 }

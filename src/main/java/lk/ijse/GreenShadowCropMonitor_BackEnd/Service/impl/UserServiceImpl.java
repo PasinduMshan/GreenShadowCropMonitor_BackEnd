@@ -1,6 +1,7 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.Service.impl;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.UserService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.UserDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.UserStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
@@ -39,7 +40,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserStatus getUser(String email) {
-        return null;
+        if (userDao.existsById(email)) {
+            UserEntity userEntity = userDao.getReferenceById(email);
+            return mapping.toUserDTO(userEntity);
+        } else {
+            return new SelectedErrorStatus(2, "User with Email" + email + " not found");
+        }
     }
 
     @Override
