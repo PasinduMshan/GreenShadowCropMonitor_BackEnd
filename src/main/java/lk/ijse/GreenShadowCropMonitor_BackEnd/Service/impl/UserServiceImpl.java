@@ -4,10 +4,8 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.UserService;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.UserDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.UserStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.UserEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return List.of();
+        List<UserEntity> allUsers = userDao.findAll();
+        return mapping.toUserDTOList(allUsers);
     }
 
     @Override
