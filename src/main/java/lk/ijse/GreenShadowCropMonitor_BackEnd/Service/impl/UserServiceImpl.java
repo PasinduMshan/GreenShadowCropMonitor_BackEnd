@@ -7,12 +7,15 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.FieldEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.UserEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.FieldNotFoundException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,6 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(String email, UserDTO userDTO) {
-
+        Optional<UserEntity> userEntity = userDao.findById(email);
+        if (!userEntity.isPresent()) {
+            throw new UserNotFoundException("User Not Found");
+        } else {
+            userEntity.get().setEmail(userDTO.getEmail());
+            userEntity.get().setPassword(userDTO.getPassword());
+            userEntity.get().setRole(userDTO.getRole());
+        }
     }
 }
