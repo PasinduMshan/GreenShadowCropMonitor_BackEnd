@@ -6,8 +6,10 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dao.UserDao;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.UserStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.UserEntity;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.VehicleEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.VehicleNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +52,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String email) {
-
+        Optional<UserEntity> userEntity = userDao.findById(email);
+        if (!userEntity.isPresent()) {
+            throw new UserNotFoundException("User with Email" + email + " not found");
+        } else {
+            userDao.deleteById(email);
+        }
     }
 
     @Override
