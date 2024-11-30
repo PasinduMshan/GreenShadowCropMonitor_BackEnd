@@ -27,8 +27,8 @@ public class JWTServiceImpl implements JWTService {
     }
 
     @Override
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(),userDetails);
+    public String generateToken(UserDetails user) {
+        return generateToken(new HashMap<>(),user);
     }
 
     @Override
