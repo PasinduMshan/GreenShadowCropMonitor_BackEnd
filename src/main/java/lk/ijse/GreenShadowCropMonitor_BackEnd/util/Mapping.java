@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -118,5 +117,15 @@ public class Mapping {
         dto.setFieldCode(logEntity.getFields().getFieldCode());
         dto.setCropCode(logEntity.getCrop().getCropCode());
         return dto;
+    }
+
+    public UserEntity toUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
+    public UserDTO toUserDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+    public List<UserDTO> toUserDTOList(List<UserEntity> userEntityList) {
+        return modelMapper.map(userEntityList, new TypeToken<List<UserDTO>>() {}.getType());
     }
 }
