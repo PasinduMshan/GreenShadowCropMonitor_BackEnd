@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class EquipmentController {
     @Autowired
     EquipmentService equipmentService;
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDTO equipmentDTO) {
         try {
@@ -35,6 +37,7 @@ public class EquipmentController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{equipmentId}")
     public ResponseEntity<Void> updateEquipment(@RequestBody EquipmentDTO equipmentDTO, @PathVariable("equipmentId") String equipmentId) {
@@ -54,6 +57,7 @@ public class EquipmentController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipmentStatus getEquipment(@PathVariable("equipmentId") String equipmentId) {
         String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
@@ -65,11 +69,13 @@ public class EquipmentController {
         return equipmentService.getEquipment(equipmentId);
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDTO> getAllEquipment() {
         return equipmentService.getAllEquipment();
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId) {
         String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";

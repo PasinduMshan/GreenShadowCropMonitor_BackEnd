@@ -6,11 +6,11 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.VehicleStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.VehicleDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.VehicleNotFoundException;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +23,7 @@ public class VehicleController {
     @Autowired
     VehicleService vehicleService;
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
         try {
@@ -35,6 +36,7 @@ public class VehicleController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{vehicleCode}")
     public ResponseEntity<Void> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable String vehicleCode) {
@@ -54,6 +56,7 @@ public class VehicleController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleStatus getVehicle(@PathVariable("vehicleCode") String vehicleCode) {
         String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
@@ -65,11 +68,13 @@ public class VehicleController {
         return vehicleService.getVehicle(vehicleCode);
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDTO> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{vehicleCode}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode) {
         String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";

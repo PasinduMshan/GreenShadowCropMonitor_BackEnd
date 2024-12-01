@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,7 @@ public class CropController {
     @Autowired
     CropService cropService;
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCrop(
             @RequestParam("cropCode") String cropCode,
@@ -54,6 +56,7 @@ public class CropController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{cropCode}")
     public ResponseEntity<Void> updateCrop(
@@ -83,11 +86,13 @@ public class CropController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops() {
         return cropService.getAllCrops();
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{cropCode}")
     public CropStatus getCrop(@PathVariable("cropCode") String cropCode) {
         String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
@@ -99,6 +104,7 @@ public class CropController {
         return cropService.getCrop(cropCode);
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{cropCode}")
     public ResponseEntity<Void> deleteCrop(@PathVariable("cropCode") String cropCode) {
         String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";

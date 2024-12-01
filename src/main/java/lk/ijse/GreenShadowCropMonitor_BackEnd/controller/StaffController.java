@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class StaffController {
     @Autowired
     StaffService staffService;
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
         try {
@@ -35,6 +37,7 @@ public class StaffController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = {"/{staffId}"})
     public ResponseEntity<Void> updateStaff(@RequestBody StaffDTO staffDTO, @PathVariable String staffId) {
@@ -54,11 +57,13 @@ public class StaffController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDTO> getAllStaff() {
         return staffService.getAllStaff();
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffStatus getStaff(@PathVariable("staffId") String staffId) {
         String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
@@ -70,6 +75,7 @@ public class StaffController {
         return staffService.getStaff(staffId);
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{staffId}")
     public ResponseEntity<Void> deleteStaff(@PathVariable("staffId") String staffId) {
         String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
