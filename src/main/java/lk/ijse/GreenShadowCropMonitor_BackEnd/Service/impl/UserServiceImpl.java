@@ -9,7 +9,8 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.UserEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private Mapping mapping;
+    private final UserDao userDao;
+    private final Mapping mapping;
 
     @Override
     public void saveUser(UserDTO userDTO) throws DataPersistException {
@@ -68,5 +68,12 @@ public class UserServiceImpl implements UserService {
             userEntity.get().setPassword(userDTO.getPassword());
             userEntity.get().setRole(userDTO.getRole());
         }
+    }
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return userName ->
+                userDao.findByEmail(userName)
+                        .orElseThrow(()-> new UserNotFoundException("User Not Found"));
     }
 }
