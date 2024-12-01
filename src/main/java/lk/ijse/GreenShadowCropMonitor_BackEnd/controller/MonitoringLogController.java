@@ -27,6 +27,7 @@ public class MonitoringLogController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveMonitorLogDetails(
+            @RequestParam("logCode") String logCode,
             @RequestParam("logDate") @DateTimeFormat(pattern = "yyyy-MM-dd")Date logDate,
             @RequestParam("logDetails") String logDetails,
             @RequestParam("staffId") String staffId,
@@ -37,7 +38,6 @@ public class MonitoringLogController {
         String base64Image = "";
         try {
             base64Image = AppUtil.imageFileToBase64(observedImage.getBytes());
-            String logCode = AppUtil.generateMonitorLogCode();
             var buildLogDTO = new MonitoringLogDTO();
             buildLogDTO.setLogCode(logCode);
             buildLogDTO.setLogDate(logDate);

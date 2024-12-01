@@ -25,6 +25,7 @@ public class FieldController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(
+            @RequestParam("fieldCode") String fieldCode,
             @RequestParam("fieldName") String fieldName,
             @RequestParam("fieldLocation") String fieldLocation,
             @RequestParam("fieldSize") Double fieldSize,
@@ -36,7 +37,6 @@ public class FieldController {
         try {
             base64FieldImage01 = AppUtil.imageFileToBase64(fieldImage01.getBytes());
             base64FieldImage02 = AppUtil.imageFileToBase64(fieldImage02.getBytes());
-            String fieldCode = AppUtil.generateFieldCode();
             var buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldCode(fieldCode);
             buildFieldDTO.setFieldName(fieldName);
