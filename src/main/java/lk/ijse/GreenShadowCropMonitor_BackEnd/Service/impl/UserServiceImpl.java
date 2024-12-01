@@ -10,7 +10,6 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,11 +68,5 @@ public class UserServiceImpl implements UserService {
             userEntity.get().setPassword(userDTO.getPassword());
             userEntity.get().setRole(userDTO.getRole());
         }
-    }
-
-    @Override
-    public UserDetailsService getUserDetailsService() {
-        return username -> (org.springframework.security.core.userdetails.UserDetails) userDao.findByEmail(username)
-                        .orElseThrow(()-> new UserNotFoundException("User Not Found"));
     }
 }
