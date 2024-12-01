@@ -7,10 +7,12 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.SignInDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.entity.UserEntity;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.AlreadyExistsException;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.UserNotFoundException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.secure.JWTAuthResponse;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +37,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JWTAuthResponse signIn(SignInDTO signInDto) {
-        return null;
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signInDto.getEmail(), signInDto.getPassword())
+        );
+        UserEntity userEntity = userDao.findByEmail(signInDto.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("user not found"));
+        var jwtToken = jwtService.generateToken(userEntity);
+        return JWTAuthResponse.builder().token(jwtToken).build();
     }
 
     @Override
     public JWTAuthResponse refreshToken(String token) {
-        return null;
+        String email = jwtService.extractUserName(token);
+        UserEntity userEntity = userDao.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("user not found"));
+        var jwtToken = jwtService.generateToken(userEntity);
+        return JWTAuthResponse.builder().token(jwtToken).build();
     }
 }

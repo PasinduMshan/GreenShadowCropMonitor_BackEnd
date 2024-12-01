@@ -1,6 +1,7 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.AuthenticationService;
+import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.SignInDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.UserDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.AlreadyExistsException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.secure.JWTAuthResponse;
@@ -27,5 +28,15 @@ public class AuthUserController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/signIn")
+    public ResponseEntity<JWTAuthResponse> signIn(@RequestBody SignInDTO signInDTO) {
+        return ResponseEntity.ok(authenticationService.signIn(signInDTO));
+    }
+
+    @PostMapping("/refresh/{token}")
+    public ResponseEntity<JWTAuthResponse> refreshToken(@PathVariable("token") String token){
+        return ResponseEntity.ok(authenticationService.refreshToken(token));
     }
 }
