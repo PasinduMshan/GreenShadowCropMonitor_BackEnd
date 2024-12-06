@@ -1,7 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.CropService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.CropStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.CropDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/crop")
@@ -95,25 +93,13 @@ public class CropController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{cropCode}")
     public CropStatus getCrop(@PathVariable("cropCode") String cropCode) {
-//        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-//        Pattern regexPattern = Pattern.compile(regexForCropID);
-//        var regexMatcher = regexPattern.matcher(cropCode);
-//        if (!regexMatcher.matches()) {
-//            return new SelectedErrorStatus(1, "Crop ID is not valid");
-//        }
         return cropService.getCrop(cropCode);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{cropCode}")
     public ResponseEntity<Void> deleteCrop(@PathVariable("cropCode") String cropCode) {
-//        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-//        Pattern regexPattern = Pattern.compile(regexForCropID);
-//        var regexMatcher = regexPattern.matcher(cropCode);
         try {
-//            if (!regexMatcher.matches()) {
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
             cropService.deleteCrop(cropCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

@@ -89,4 +89,22 @@ public class StaffServiceImpl implements StaffService {
             throw new StaffNotFoundException("Staff Not Found");
         }
     }
+
+    @Override
+    public List<StaffDTO> getAllStaffBySortFirstName() {
+        List<StaffEntity> allStaff = staffDao.findAllSortedByFirstName();
+        return mapping.toStaffDTOList(allStaff);
+    }
+
+    @Override
+    public List<StaffDTO> getAllStaffBySortDesignation() {
+        List<StaffEntity> allStaff = staffDao.findAllSortedByDesignation();
+        return mapping.toStaffDTOList(allStaff);
+    }
+
+    @Override
+    public List<StaffDTO> getAllStaffBySortGender() {
+        List<StaffEntity> allStaff = staffDao.findAllSortedByGender();
+        return mapping.toStaffDTOList(allStaff);
+    }
 }

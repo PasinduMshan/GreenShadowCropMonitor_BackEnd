@@ -1,7 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.controller;
 
 import lk.ijse.GreenShadowCropMonitor_BackEnd.Service.MonitoringLogService;
-import lk.ijse.GreenShadowCropMonitor_BackEnd.customStatusCode.SelectedErrorStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.MonitoringLogStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.MonitoringLogDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/monitoring_log")
@@ -99,25 +97,13 @@ public class MonitoringLogController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(value = "/{logCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public MonitoringLogStatus getMonitorLogDetails(@PathVariable("logCode") String logCode) {
-//        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-//        Pattern regexPattern = Pattern.compile(regexForID);
-//        var regexMatcher = regexPattern.matcher(logCode);
-//        if (!regexMatcher.matches()) {
-//            return new SelectedErrorStatus(1, "Monitor Log ID is not valid");
-//        }
         return monitoringLogService.getMonitorLog(logCode);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{logCode}")
     public ResponseEntity<Void> deleteMonitorLogDetails(@PathVariable("logCode") String logCode) {
-//        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-//        Pattern regexPattern = Pattern.compile(regexForID);
-//        var regexMatcher = regexPattern.matcher(logCode);
         try {
-//            if (!regexMatcher.matches()) {
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
             monitoringLogService.deleteMonitorLog(logCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
