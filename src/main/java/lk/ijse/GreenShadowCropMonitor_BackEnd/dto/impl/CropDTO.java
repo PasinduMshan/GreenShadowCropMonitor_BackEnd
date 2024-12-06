@@ -15,9 +15,8 @@ public class CropDTO implements SuperDTO, CropStatus {
     private String cropCode;
     private String cropCommonName;
     private String cropScientificName;
-    private String cropImage;
+    private String cropImage01;
     private String cropCategory;
     private String cropSeason;
     private String fieldCode;
-    private List<MonitoringLogDTO> logServices;
 }

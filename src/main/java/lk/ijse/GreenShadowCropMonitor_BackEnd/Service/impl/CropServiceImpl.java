@@ -77,7 +77,7 @@ public class CropServiceImpl implements CropService {
         } else {
             cropEntity.get().setCropCommonName(cropDTO.getCropCommonName());
             cropEntity.get().setCropScientificName(cropDTO.getCropScientificName());
-            cropEntity.get().setCropImage(cropDTO.getCropImage());
+            cropEntity.get().setCropImage01(cropDTO.getCropImage01());
             cropEntity.get().setCropCategory(cropDTO.getCropCategory());
             cropEntity.get().setCropSeason(cropDTO.getCropSeason());
             cropEntity.get().setFields(fieldEntity);
@@ -102,7 +102,7 @@ public class CropServiceImpl implements CropService {
         cropEntity.setCropCode(cropDTO.getCropCode());
         cropEntity.setCropCommonName(cropDTO.getCropCommonName());
         cropEntity.setCropScientificName(cropDTO.getCropScientificName());
-        cropEntity.setCropImage(cropDTO.getCropImage());
+        cropEntity.setCropImage01(cropDTO.getCropImage01());
         cropEntity.setCropCategory(cropDTO.getCropCategory());
         cropEntity.setCropSeason(cropDTO.getCropSeason());
         cropEntity.setFields(fieldEntity);

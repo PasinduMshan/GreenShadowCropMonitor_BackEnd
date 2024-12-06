@@ -82,7 +82,7 @@ public class Mapping {
         cropDTO.setCropCode(cropEntity.getCropCode());
         cropDTO.setCropCommonName(cropEntity.getCropCommonName());
         cropDTO.setCropScientificName(cropEntity.getCropScientificName());
-        cropDTO.setCropImage(cropEntity.getCropImage());
+        cropDTO.setCropImage01(cropEntity.getCropImage01());
         cropDTO.setCropCategory(cropEntity.getCropCategory());
         cropDTO.setCropSeason(cropEntity.getCropSeason());
         cropDTO.setFieldCode(cropEntity.getFields().getFieldCode());

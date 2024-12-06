@@ -40,13 +40,13 @@ public class EquipmentController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{equipmentId}")
     public ResponseEntity<Void> updateEquipment(@RequestBody EquipmentDTO equipmentDTO, @PathVariable("equipmentId") String equipmentId) {
-        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
-        var regexMatcher = regexPattern.matcher(equipmentId);
+//        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
+//        var regexMatcher = regexPattern.matcher(equipmentId);
         try {
-            if (!regexMatcher.matches() && equipmentDTO == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches() && equipmentDTO == null) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             equipmentService.updateEquipment(equipmentId, equipmentDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (StaffNotFoundException e) {
@@ -59,12 +59,12 @@ public class EquipmentController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipmentStatus getEquipment(@PathVariable("equipmentId") String equipmentId) {
-        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
-        var regexMatcher = regexPattern.matcher(equipmentId);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Equipment ID is not valid");
-        }
+//        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
+//        var regexMatcher = regexPattern.matcher(equipmentId);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Equipment ID is not valid");
+//        }
         return equipmentService.getEquipment(equipmentId);
     }
 
@@ -77,13 +77,13 @@ public class EquipmentController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId) {
-        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
-        var regexMatcher = regexPattern.matcher(equipmentId);
+//        String regexForEquipmentID = "^EQUIPMENT-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForEquipmentID);
+//        var regexMatcher = regexPattern.matcher(equipmentId);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             equipmentService.deleteEquipment(equipmentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl.StaffDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.DataPersistException;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.exception.StaffNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,14 +19,14 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/staff")
-@CrossOrigin
+@RequiredArgsConstructor
 public class StaffController {
-    @Autowired
-    StaffService staffService;
+    private final StaffService staffService;
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
+        System.out.println("Received staff data: " + staffDTO);
         try {
             staffService.saveStaff(staffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -40,13 +41,13 @@ public class StaffController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = {"/{staffId}"})
     public ResponseEntity<Void> updateStaff(@RequestBody StaffDTO staffDTO, @PathVariable String staffId) {
-        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForStaffID);
-        var regexMatcher = regexPattern.matcher(staffId);
+//        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForStaffID);
+//        var regexMatcher = regexPattern.matcher(staffId);
         try {
-            if (!regexMatcher.matches() && staffDTO == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches() && staffDTO == null) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             staffService.updateStaff(staffId, staffDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (StaffNotFoundException e) {
@@ -65,25 +66,25 @@ public class StaffController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffStatus getStaff(@PathVariable("staffId") String staffId) {
-        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForStaffID);
-        var regexMatcher = regexPattern.matcher(staffId);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Staff ID is not valid");
-        }
+//        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForStaffID);
+//        var regexMatcher = regexPattern.matcher(staffId);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Staff ID is not valid");
+//        }
         return staffService.getStaff(staffId);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{staffId}")
     public ResponseEntity<Void> deleteStaff(@PathVariable("staffId") String staffId) {
-        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForStaffID);
-        var regexMatcher = regexPattern.matcher(staffId);
+//        String regexForStaffID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForStaffID);
+//        var regexMatcher = regexPattern.matcher(staffId);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             staffService.deleteStaff(staffId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class CropEntity {
     private String cropCommonName;
     private String cropScientificName;
     @Column(columnDefinition = "LONGTEXT")
-    private String cropImage;
+    private String cropImage01;
     private String cropCategory;
     private String cropSeason;
     @ManyToOne

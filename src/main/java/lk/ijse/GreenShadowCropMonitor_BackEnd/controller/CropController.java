@@ -33,7 +33,7 @@ public class CropController {
             @RequestParam("cropCategory") String cropCategory,
             @RequestParam("cropSeason") String cropSeason,
             @RequestParam("fieldCode") String fieldCode,
-            @RequestParam("cropImage") MultipartFile cropImage
+            @RequestParam("cropImage01") MultipartFile cropImage
     ) {
         String base64Image = "";
         try {
@@ -42,7 +42,7 @@ public class CropController {
             buildCropDTO.setCropCode(cropCode);
             buildCropDTO.setCropCommonName(cropCommonName);
             buildCropDTO.setCropScientificName(cropScientificName);
-            buildCropDTO.setCropImage(base64Image);
+            buildCropDTO.setCropImage01(base64Image);
             buildCropDTO.setCropCategory(cropCategory);
             buildCropDTO.setCropSeason(cropSeason);
             buildCropDTO.setFieldCode(fieldCode);
@@ -65,7 +65,7 @@ public class CropController {
             @RequestParam("cropCategory") String cropCategory,
             @RequestParam("cropSeason") String cropSeason,
             @RequestParam("fieldCode") String fieldCode,
-            @RequestParam("cropImage") MultipartFile cropImage,
+            @RequestParam("cropImage01") MultipartFile cropImage,
             @PathVariable("cropCode") String cropCode
     ){
         String base64Image = "";
@@ -75,7 +75,7 @@ public class CropController {
             buildCropDTO.setCropCode(cropCode);
             buildCropDTO.setCropCommonName(cropCommonName);
             buildCropDTO.setCropScientificName(cropScientificName);
-            buildCropDTO.setCropImage(base64Image);
+            buildCropDTO.setCropImage01(base64Image);
             buildCropDTO.setCropCategory(cropCategory);
             buildCropDTO.setCropSeason(cropSeason);
             buildCropDTO.setFieldCode(fieldCode);
@@ -95,25 +95,25 @@ public class CropController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{cropCode}")
     public CropStatus getCrop(@PathVariable("cropCode") String cropCode) {
-        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForCropID);
-        var regexMatcher = regexPattern.matcher(cropCode);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Crop ID is not valid");
-        }
+//        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForCropID);
+//        var regexMatcher = regexPattern.matcher(cropCode);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Crop ID is not valid");
+//        }
         return cropService.getCrop(cropCode);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{cropCode}")
     public ResponseEntity<Void> deleteCrop(@PathVariable("cropCode") String cropCode) {
-        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForCropID);
-        var regexMatcher = regexPattern.matcher(cropCode);
+//        String regexForCropID = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForCropID);
+//        var regexMatcher = regexPattern.matcher(cropCode);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             cropService.deleteCrop(cropCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

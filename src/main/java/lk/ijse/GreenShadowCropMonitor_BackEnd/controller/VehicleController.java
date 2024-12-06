@@ -40,13 +40,13 @@ public class VehicleController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/{vehicleCode}")
     public ResponseEntity<Void> updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable String vehicleCode) {
-        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForVehicleID);
-        var regexMatcher = regexPattern.matcher(vehicleCode);
+//        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForVehicleID);
+//        var regexMatcher = regexPattern.matcher(vehicleCode);
         try {
-            if (!regexMatcher.matches() && vehicleDTO == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches() && vehicleDTO == null) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             vehicleService.updateVehicle(vehicleCode, vehicleDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (VehicleNotFoundException e) {
@@ -59,12 +59,12 @@ public class VehicleController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleStatus getVehicle(@PathVariable("vehicleCode") String vehicleCode) {
-        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForVehicleID);
-        var regexMatcher = regexPattern.matcher(vehicleCode);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Vehicle Code Not Found");
-        }
+//        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForVehicleID);
+//        var regexMatcher = regexPattern.matcher(vehicleCode);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Vehicle Code Not Found");
+//        }
         return vehicleService.getVehicle(vehicleCode);
     }
 
@@ -77,13 +77,13 @@ public class VehicleController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATIVE')")
     @DeleteMapping(value = "/{vehicleCode}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode) {
-        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForVehicleID);
-        var regexMatcher = regexPattern.matcher(vehicleCode);
+//        String regexForVehicleID = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForVehicleID);
+//        var regexMatcher = regexPattern.matcher(vehicleCode);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             vehicleService.deleteVehicle(vehicleCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

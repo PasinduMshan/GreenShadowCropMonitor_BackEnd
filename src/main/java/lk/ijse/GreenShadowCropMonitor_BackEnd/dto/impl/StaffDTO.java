@@ -1,5 +1,6 @@
 package lk.ijse.GreenShadowCropMonitor_BackEnd.dto.impl;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.StaffStatus;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.dto.SuperDTO;
 import lk.ijse.GreenShadowCropMonitor_BackEnd.util.Gender;
@@ -30,6 +31,4 @@ public class StaffDTO implements SuperDTO, StaffStatus {
     private String contactNo;
     private String email;
     private Role role;
-    private List<MonitoringLogDTO> logServices;
-    private List<VehicleDTO> vehicles;
 }

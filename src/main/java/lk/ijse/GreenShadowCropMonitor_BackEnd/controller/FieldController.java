@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/fields")
-@CrossOrigin
 @RequiredArgsConstructor
 public class FieldController {
     private final FieldService fieldService;
@@ -95,25 +94,25 @@ public class FieldController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldStatus getField(@PathVariable("fieldCode") String fieldCode) {
-        String regexForFieldID = "^FIELD-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForFieldID);
-        var regexMatcher = regexPattern.matcher(fieldCode);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Field ID is not valid");
-        }
+//        String regexForFieldID = "^FIELD-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForFieldID);
+//        var regexMatcher = regexPattern.matcher(fieldCode);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Field ID is not valid");
+//        }
         return fieldService.getField(fieldCode);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{fieldCode}")
     public ResponseEntity<Void> deleteField(@PathVariable("fieldCode") String fieldCode) {
-        String regexForFieldID = "^FIELD-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForFieldID);
-        var regexMatcher = regexPattern.matcher(fieldCode);
+//        String regexForFieldID = "^FIELD-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForFieldID);
+//        var regexMatcher = regexPattern.matcher(fieldCode);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             fieldService.deleteField(fieldCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
