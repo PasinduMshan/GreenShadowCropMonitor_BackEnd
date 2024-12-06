@@ -99,25 +99,25 @@ public class MonitoringLogController {
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @GetMapping(value = "/{logCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public MonitoringLogStatus getMonitorLogDetails(@PathVariable("logCode") String logCode) {
-        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForID);
-        var regexMatcher = regexPattern.matcher(logCode);
-        if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1, "Monitor Log ID is not valid");
-        }
+//        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForID);
+//        var regexMatcher = regexPattern.matcher(logCode);
+//        if (!regexMatcher.matches()) {
+//            return new SelectedErrorStatus(1, "Monitor Log ID is not valid");
+//        }
         return monitoringLogService.getMonitorLog(logCode);
     }
 
     @PreAuthorize("hasRole('MANAGER') or hasRole('SCIENTIST')")
     @DeleteMapping(value = "/{logCode}")
     public ResponseEntity<Void> deleteMonitorLogDetails(@PathVariable("logCode") String logCode) {
-        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForID);
-        var regexMatcher = regexPattern.matcher(logCode);
+//        String regexForID = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+//        Pattern regexPattern = Pattern.compile(regexForID);
+//        var regexMatcher = regexPattern.matcher(logCode);
         try {
-            if (!regexMatcher.matches()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+//            if (!regexMatcher.matches()) {
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
             monitoringLogService.deleteMonitorLog(logCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
@@ -126,3 +126,5 @@ public class MonitoringLogController {
     }
 
 }
+
+
